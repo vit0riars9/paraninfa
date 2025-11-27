@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Página Interativa Azul - Card</title>
+  <style>
+    :root {
+      --bg: linear-gradient(135deg, #f8f0ff 0%, #fff 50%);
+      --accent: #730dae;
+      --accent-2: #730dae;
+      --muted: #334d66;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+
+    }
+
+    .card {
+      width: 100%;
+      max-width: 920px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 28px;
+      align-items: center;
+      position: relative;
+      overflow: visible;
+      /* Sombra mais suave e difusa */
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15), 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .photo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 12px 30px rgba(115,13,174,0.25);
+      border: 8px solid rgba(255, 255, 255, 0.6);
+      background: linear-gradient(180deg, #fff, #f3e9ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .content h1 {
+      margin: 0 0 10px 0;
+      font-size: 28px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .content p {
+      margin: 0 0 18px 0;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .cta {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 8px 25px rgba(115,13,174,0.3);
+      transition: all 0.2s;
+    }
+
+    .btn.alt {
+      background: var(--accent-2);
+      color: #fff;
+      border: 1px solid rgba(115,13,174,0.2);
+      position: relative;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    @media (max-width: 760px) {
+      .card {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+        padding: 22px;
+      }
+      .photo {
+        width: 160px;
+        height: 160px;
+      }
+    }
+    /* BOTÃO DE MODO ESCURO */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: #ffffffcc;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+  z-index: 999999;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+@media print {
+
+/* Permitir impressão das cores reais */
+body {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  background: white !important;
+}
+
+/* Esconde tudo */
+body * {
+  visibility: hidden !important;
+}
+
+/* Mostra só o card */
+.card, .card * {
+  visibility: visible !important;
+}
+
+/* Centraliza o card na impressão */
+.card {
+  position: absolute !important;
+  top: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25) !important;
+  background: white !important; /* garante card branco */
+}
+
+/* Esconde todos os botões, MENOS o SIM */
+button:not(#btnYes) {
+  display: none !important;
+}
+
+/* Mantém o botão SIM com cor correta */
+#btnYes {
+  display: inline-block !important;
+  visibility: visible !important;
+  background: var(--accent) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 25px rgba(115,13,174,0.3) !important;
+}
+}
+
+  </style>
+</head>
+<body>
+  <canvas id="confetti"></canvas>
+
+  <div class="card">
+    <div class="photo-wrap">
+      <div class="photo" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=800&auto=format&fit=crop" alt="Imagem">
+      </div>
+    </div>
+    <div class="content">
+
+        <h1>ACEITA SER NOSSA PARANINFA DE DESENVOLVIMENTO DE SISTEMAS ?</h1>
+        <p>Nossa jornada não seria a mesma sem você. #TERCEIRÃO2025💜</p>
+      <div class="cta">
+        <button class="btn" id="btnYes">Sim 🎉</button>
+        <button class="btn alt" id="btnNo">Não 😢</button>
+        <button class="btn" id="btnPrint">🖨️</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    let confetti = [];
+    function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+    window.addEventListener('resize',resize);resize();
+    function random(min,max){return Math.random()*(max-min)+min}
+
+    function createConfetti(x,y){
+      for(let i=0;i<80;i++){
+        confetti.push({x:x+random(-20,20),y:y+random(-10,10),vx:random(-6,6),vy:random(-12,-3),size:random(6,12),color:`hsl(${random(180,220)},80%,60%)`,rot:random(0,360),vr:random(-6,6),life:random(60,120)});
+      }
+      if(!animating) animate();
+    }
+    let animating=false;
+    function animate(){animating=true;ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(let i=confetti.length-1;i>=0;i--){
+        let p=confetti[i]; p.vy+=0.45;p.vx*=0.99;p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.life--;
+        ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);
+        ctx.fillStyle=p.color;ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*0.6);ctx.restore();
+        if(p.y>canvas.height+40||p.life<=0) confetti.splice(i,1);
+      }
+      if(confetti.length>0)requestAnimationFrame(animate);else animating=false;
+    }
+
+    const btnYes=document.getElementById('btnYes');
+    btnYes.addEventListener('click',(e)=>{
+      const rect=e.target.getBoundingClientRect();
+      createConfetti(rect.left+rect.width/2,rect.top+rect.height/2);
+    });
+
+    const btnNo=document.getElementById('btnNo');
+    let moveDist=100;
+    btnNo.addEventListener('mousemove',(e)=>{
+      const rect=btnNo.getBoundingClientRect();
+      const mouseX=e.clientX, mouseY=e.clientY;
+      const distX=Math.abs(mouseX-(rect.left+rect.width/2));
+      const distY=Math.abs(mouseY-(rect.top+rect.height/2));
+      if(distX<80 && distY<50){
+        let newX=rect.left+(Math.random()>0.5?moveDist:-moveDist);
+        let newY=rect.top+(Math.random()>0.5?moveDist:-moveDist);
+        newX=Math.max(20,Math.min(window.innerWidth-rect.width-20,newX));
+        newY=Math.max(20,Math.min(window.innerHeight-rect.height-20,newY));
+        btnNo.style.position='fixed';btnNo.style.left=newX+'px';btnNo.style.top=newY+'px';
+      }
+    });
+
+    document.getElementById("btnPrint").addEventListener("click", () => {
+  window.print();
+});
+
+
+  </script>
+</body>
+</html>
