@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between; /* Espaça os botões horizontalmente */
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0; /* Opcional: cor de fundo */
+        }
+        img {
+            max-width: 50vw; /* Limita a largura da imagem a 50% da largura da viewport */
+            height: auto; /* Mantém a proporção da imagem */
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 20px;
+        }
+        button {
+            background-color: #007BFF; /* Cor de fundo azul */
+            color: white; /* Cor do texto */
+            border: none; /* Remove a borda */
+            border-radius: 5px; /* Bordas arredondadas */
+            padding: 10px 20px; /* Espaçamento interno */
+            font-size: 16px; /* Tamanho da fonte */
+            cursor: pointer; /* Mostra o cursor de ponteiro ao passar o mouse */
+            transition: background-color 0.3s ease; /* Animação suave ao passar o mouse */
+        }
+        button:hover {
+            background-color: #0056b3; /* Cor de fundo mais escura ao passar o mouse */
+        }
+        button:active {
+            background-color: #003f7f; /* Cor de fundo ainda mais escura ao clicar */
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button onclick="window.location.href='index.html';">⬅</button>
+        <img src="img/op1.png" alt="Logo Image">
+        <button onclick="window.location.href='index3.html';">➡</button>
+    </div>
+</body>
+</html>
